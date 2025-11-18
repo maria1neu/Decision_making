@@ -50,3 +50,4 @@ def test_conflicts():
     assert conflicts(sol3) == 2
 # PASSED
 
+# hello!
