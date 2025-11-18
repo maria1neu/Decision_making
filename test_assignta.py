@@ -7,7 +7,8 @@ test_assignta.py
 import pytest
 import numpy as np
 import pandas as pd
-from assignta import overallocation, conflicts
+from assignta import overallocation, conflicts, undersupport
+
 
 # Loading in the tests from the csv files
 def get_test_sol(num):
@@ -50,4 +51,13 @@ def test_conflicts():
     assert conflicts(sol3) == 2
 # PASSED
 
-# hello!
+# Test for Objective 3
+def test_undersupport():
+    sol1 = get_test_sol(1)
+    sol2 = get_test_sol(2)
+    sol3 = get_test_sol(3)
+
+    assert undersupport(sol1) == 1
+    assert undersupport(sol2) == 0
+    assert undersupport(sol3) == 11
+
