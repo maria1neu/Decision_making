@@ -48,3 +48,5 @@ def test_conflicts():
     assert conflicts(sol1) == 7
     assert conflicts(sol2) == 5
     assert conflicts(sol3) == 2
+# PASSED
+
