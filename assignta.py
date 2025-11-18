@@ -56,6 +56,11 @@ def conflicts(sol):
 
     return time_conflicts_count
 
+# OBJECTIVE 3
+def undersupport(sol):
+    pass
+
 # Adding the objectives to evo!
 evo = Evo()
 evo.add_objective('overallocation', overallocation)
+evo.add_objective('conflicts', conflicts)
