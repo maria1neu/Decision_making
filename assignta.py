@@ -58,9 +58,48 @@ def conflicts(sol):
 
 # OBJECTIVE 3
 def undersupport(sol):
-    pass
+    """
+    Parameters:
+    Return:
+    Does:
+    """
+
+    assignments = sol['assignments']
+    sections = sol['sections']
+
+    assigned_section_count = np.sum(assignments, axis = 0)
+
+    min_ta = sections['min_ta']
+
+    penalties = np.maximum(min_ta - assigned_section_count, 0)
+    total_penalties = np.sum(penalties)
+
+    return total_penalties
+
+#OBJECTIVE 4
+def unavailable(sol):
+    """
+    Parameters:
+    Returns:
+    Does:
+    """
+    tas = sol['tas']
+    assignments = sol['assignments']
+
+    penalty = 0
+
+    for i in range(assignments.shape[0]):
+        for j in range(assignments.shape[1]):
+            if assignments[i][j] == 1 and tas.iloc[i, j + 3] == 'U':
+                penalty += 1
+            else:
+                penalty = penalty
+
+    return penalty
 
 # Adding the objectives to evo!
 evo = Evo()
 evo.add_objective('overallocation', overallocation)
 evo.add_objective('conflicts', conflicts)
+evo.add_objective('undersupport', undersupport)
+evo.add_objective('unavailable', unavailable)
