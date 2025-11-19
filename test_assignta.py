@@ -7,7 +7,7 @@ test_assignta.py
 import pytest
 import numpy as np
 import pandas as pd
-from assignta import overallocation, conflicts, undersupport
+from assignta import overallocation, conflicts, undersupport, unavailable
 
 
 # Loading in the tests from the csv files
@@ -60,4 +60,14 @@ def test_undersupport():
     assert undersupport(sol1) == 1
     assert undersupport(sol2) == 0
     assert undersupport(sol3) == 11
+#PASSED
+
+def test_unavailable():
+    sol1 = get_test_sol(1)
+    sol2 = get_test_sol(2)
+    sol3 = get_test_sol(3)
+
+    assert unavailable(sol1) == 59
+    assert unavailable(sol2) == 57
+    assert unavailable(sol3) == 34
 
