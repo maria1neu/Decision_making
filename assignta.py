@@ -69,8 +69,10 @@ def undersupport(sol):
 
     assigned_section_count = np.sum(assignments, axis = 0)
 
+    # collects all values for the minimum number of tas per section
     min_ta = sections['min_ta']
 
+    #  Calculates the number of penalties, using vector math so negatives become 0
     penalties = np.maximum(min_ta - assigned_section_count, 0)
     total_penalties = np.sum(penalties)
 
@@ -88,8 +90,10 @@ def unavailable(sol):
 
     penalty = 0
 
+    # loops through all the columns and rows to see ta availability
     for i in range(assignments.shape[0]):
         for j in range(assignments.shape[1]):
+            # adds a penalty if the ta was scheduled but wrote unavailable
             if assignments[i][j] == 1 and tas.iloc[i, j + 3] == 'U':
                 penalty += 1
             else:
@@ -97,9 +101,30 @@ def unavailable(sol):
 
     return penalty
 
+def unpreferred(sol):
+    """
+    Parameters:
+    Returns:
+    Does:
+    """
+
+    tas = sol['tas']
+    assignments = sol['assignments']
+
+    penalty = 0
+
+    for i in range(assignments.shape[0]):
+        for j in range(assignments.shape[1]):
+            if assignments[i][j] == 1 and tas.iloc[i, j + 3] == 'W':
+                penalty += 1
+
+    return penalty
+
+
 # Adding the objectives to evo!
 evo = Evo()
 evo.add_objective('overallocation', overallocation)
 evo.add_objective('conflicts', conflicts)
 evo.add_objective('undersupport', undersupport)
 evo.add_objective('unavailable', unavailable)
+evo.add_objective('unavailable', unpreferred)
