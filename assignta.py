@@ -5,6 +5,7 @@ Due 11/23/25
 assignta.py
 """
 import pandas as pd
+import random as rnd
 import numpy as np
 from evo import Evo
 
@@ -120,6 +121,41 @@ def unpreferred(sol):
 
     return penalty
 
+def inital_solutions(tas, sections):
+
+    avail_matrix = avail_matrix = tas.iloc[:, 3:].to_numpy()
+    max_assigned_ta = tas["max_assigned"].to_numpy()
+
+    num_tas, num_sections = avail_matrix.shape
+    assignments = np.zeros((num_tas, num_sections), dtype = int)
+
+    for i in range(num_tas):
+        allowed_sections = [j for j in range(num_sections) if avail_matrix[i, j] != 'U']
+        k = rnd.randint(0, max_assigned_ta[i])
+        k = min(k, len(allowed_sections))
+
+        chosen_sections = rnd.sample(allowed_sections, k)
+
+        for j in chosen_sections:
+            assignments[i, j] = 1
+
+    for j in range(num_sections):
+        current_tas = assignments[:, j].sum()
+        required_tas = sections['min_ta'].iloc[j]
+
+        while current_tas[j] < required_tas[j]:
+            candidates = [
+                i for i in range(num_tas)
+                if avail_matrix[i, j] != "U"
+                   and assignments[i, j] == 0
+                   and assignments[i, :].sum() < max_assigned_ta[i]
+            ]
+            if candidates != 0:
+                i = rnd.choice(candidates)
+                assignments[i, j] = 1
+                current_tas += 1
+
+    return assignments
 
 # Adding the objectives to evo!
 evo = Evo()
@@ -127,4 +163,4 @@ evo.add_objective('overallocation', overallocation)
 evo.add_objective('conflicts', conflicts)
 evo.add_objective('undersupport', undersupport)
 evo.add_objective('unavailable', unavailable)
-evo.add_objective('unavailable', unpreferred)
+evo.add_objective('unpreferred', unpreferred)
