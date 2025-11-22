@@ -121,6 +121,7 @@ def unpreferred(sol):
 
     return penalty
 
+#randomized initial solution
 def inital_solutions(tas, sections):
 
     avail_matrix = avail_matrix = tas.iloc[:, 3:].to_numpy()
@@ -156,6 +157,74 @@ def inital_solutions(tas, sections):
                 current_tas += 1
 
     return assignments
+
+#agents
+
+def agent_fix_unavailable(parents):
+
+    sol = parents[0]
+    tas = sol['tas']
+    assignments = sol['assignments']
+
+    avail_matrix = tas.iloc[:, 3:].to_numpy()
+    num_tas, num_sections = assignments.shape
+
+    i = rnd.randint(0, num_tas - 1)
+    j = rnd.randint(0, num_sections - 1)
+
+    if assignments[i, j] == 1 and avail_matrix[i, j] == 'U':
+        assignments[i, j] = 0
+
+    return sol
+
+def agent_fix_unpreferred(parents):
+
+    sol = parents[0]
+    tas = sol['tas']
+    assignments = sol['assignments']
+
+    avail_matrix = tas.iloc[:, 3:].to_numpy()
+    num_tas, num_sections = assignments.shape
+
+    i = rnd.randint(0, num_tas - 1)
+    j = rnd.randint(0, num_sections - 1)
+
+    if assignments[i, j] == 1 and avail_matrix[i, j] == 'W':
+        assignments[i, j] = 0
+
+    return sol
+
+def agent_random_flip(parents):
+
+    sol = parents[0]
+    assignments = sol["assignments"]
+
+    n_ta, n_sec = assignments.shape
+    i = rnd.randrange(0, n_ta)
+    j = rnd.randrange(0, n_sec)
+
+    assignments[i, j] = 1 - assignments[i, j]
+
+    return sol
+
+def agent_reduce_overallocation(parents):
+
+    sol = parents[0]
+    tas = sol["tas"]
+    assignments = sol["assignments"]
+
+    max_assigned_ta = tas["max_assigned"].to_numpy()
+
+    num_tas, num_sections = assignments.shape
+
+    i = rnd.randint(0, num_tas - 1)
+    assigned_sections = [j for j in range(num_sections) if assignments[i, j] == 1]
+
+    if len(assigned_sections) > max_assigned_ta[i]:
+        j = rnd.choice(assigned_sections)
+        assignments[i, j] = 0
+
+    return sol
 
 # Adding the objectives to evo!
 evo = Evo()
