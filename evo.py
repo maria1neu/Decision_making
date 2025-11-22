@@ -9,6 +9,7 @@ import random as rnd
 import copy
 from functools import reduce
 import numpy as np
+import time
 
 class Evo:
 
@@ -73,7 +74,7 @@ class Evo:
         nds = reduce(Evo.reduce_nds, self.pop.keys(), self.pop.keys())
         self.pop = {scores: self.pop[scores] for scores in nds}
 
-    def evolve(self, n=1, dom=100):
+    def evolve(self, time_limit=300, dom=100):
 
         """ Run n random agents (default=1)
 
@@ -83,7 +84,11 @@ class Evo:
         status defines how often we display the current population
         """
 
-        for i in range(n):
+        start = time.time()
+        i = 0
+
+        while time.time() - start < time_limit:
+
             self.run_random_agent()
             if i % dom == 0:
                 self.remove_dominated()

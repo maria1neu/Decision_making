@@ -122,9 +122,12 @@ def unpreferred(sol):
     return penalty
 
 #randomized initial solution
-def inital_solutions(tas, sections):
+def inital_solutions():
 
-    avail_matrix = avail_matrix = tas.iloc[:, 3:].to_numpy()
+    tas = pd.read_csv("tas.csv")
+    sections = pd.read_csv("sections.csv")
+
+    avail_matrix = tas.iloc[:, 3:].to_numpy()
     max_assigned_ta = tas["max_assigned"].to_numpy()
 
     num_tas, num_sections = avail_matrix.shape
@@ -144,21 +147,21 @@ def inital_solutions(tas, sections):
         current_tas = assignments[:, j].sum()
         required_tas = sections['min_ta'].iloc[j]
 
-        while current_tas[j] < required_tas[j]:
+        while current_tas < required_tas:
             candidates = [
                 i for i in range(num_tas)
                 if avail_matrix[i, j] != "U"
                    and assignments[i, j] == 0
                    and assignments[i, :].sum() < max_assigned_ta[i]
             ]
-            if candidates != 0:
-                i = rnd.choice(candidates)
-                assignments[i, j] = 1
-                current_tas += 1
+            if len(candidates) == 0:
+                break
 
-    return assignments
+            i = rnd.choice(candidates)
+            assignments[i, j] = 1
+            current_tas += 1
 
-#agents
+    return { "assignments": assignments, "tas": tas, "sections": sections }
 
 def agent_fix_unavailable(parents):
 
@@ -233,3 +236,21 @@ evo.add_objective('conflicts', conflicts)
 evo.add_objective('undersupport', undersupport)
 evo.add_objective('unavailable', unavailable)
 evo.add_objective('unpreferred', unpreferred)
+
+for _ in range(20):
+    evo.add_solution(inital_solutions())
+
+# Register agents
+evo.add_agent("fix_unavailable", agent_fix_unavailable, k=1)
+evo.add_agent("fix_unpreferred", agent_fix_unpreferred, k=1)
+evo.add_agent("random_flip", agent_random_flip, k=1)
+evo.add_agent("reduce_overallocation", agent_reduce_overallocation, k=1)
+
+print("Initial nondominated population:")
+print(evo)
+
+# Run for 5 minutes
+evo.evolve(time_limit=300)
+
+print("\nFinal nondominated population:")
+print(evo)
