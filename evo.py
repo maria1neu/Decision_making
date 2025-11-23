@@ -10,6 +10,7 @@ import copy
 from functools import reduce
 import numpy as np
 import time
+from profiler import profile
 
 class Evo:
 
@@ -74,6 +75,7 @@ class Evo:
         nds = reduce(Evo.reduce_nds, self.pop.keys(), self.pop.keys())
         self.pop = {scores: self.pop[scores] for scores in nds}
 
+    @profile
     def evolve(self, time_limit=300, dom=100):
 
         """ Run n random agents (default=1)
