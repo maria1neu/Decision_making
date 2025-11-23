@@ -79,7 +79,7 @@ def undersupport(sol):
 
     return total_penalties
 
-#OBJECTIVE 4
+# OBJECTIVE 4
 def unavailable(sol):
     """
     Parameters:
@@ -102,6 +102,7 @@ def unavailable(sol):
 
     return penalty
 
+# OBJECTIVE 5
 def unpreferred(sol):
     """
     Parameters:
@@ -112,11 +113,14 @@ def unpreferred(sol):
     tas = sol['tas']
     assignments = sol['assignments']
 
+    avail_cols = [col for col in tas.columns if col.isdigit()]
+    availability = tas[avail_cols].astype(str).to_numpy()
+
     penalty = 0
 
     for i in range(assignments.shape[0]):
         for j in range(assignments.shape[1]):
-            if assignments[i][j] == 1 and tas.iloc[i, j + 3] == 'W':
+            if assignments[i][j] == 1 and availability[i, j] == 'W':
                 penalty += 1
 
     return penalty

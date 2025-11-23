@@ -62,6 +62,7 @@ def test_undersupport():
     assert undersupport(sol3) == 11
 #PASSED
 
+# Test for Objective 4
 def test_unavailable():
     sol1 = get_test_sol(1)
     sol2 = get_test_sol(2)
@@ -71,12 +72,12 @@ def test_unavailable():
     assert unavailable(sol2) == 57
     assert unavailable(sol3) == 34
 
+# Test for Objective 5
 def test_unpreferred():
     sol1 = get_test_sol(1)
     sol2 = get_test_sol(2)
     sol3 = get_test_sol(3)
 
-    assert unavailable(sol1) == 10
-    assert unavailable(sol2) == 16
-    assert unavailable(sol3) == 17
-
+    assert unpreferred(sol1) == 10
+    assert unpreferred(sol2) == 16
+    assert unpreferred(sol3) == 17
