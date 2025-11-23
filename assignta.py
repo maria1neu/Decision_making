@@ -37,29 +37,19 @@ def overallocation(sol):
 # OBJECTIVE 2
 @profile
 def conflicts(sol):
-    """
-    Parameters:
-    Returns:
-    Does:
-    """
     assignments = sol['assignments']
     sections = sol['sections']
 
-    time_conflicts_count = 0
+    times = sections['daytime'].to_numpy()
+    time_matrix = assignments * times
 
-    # Loops over all TAs and their assignments
-    for i in range(assignments.shape[0]):
-        sections_assigned = np.where(assignments[i] == 1)[0]
+    # Count conflicts per TA
+    conflicts_per_ta = [
+        1 if len(row[row != 0]) != len(np.unique(row[row != 0])) else 0
+        for row in time_matrix
+    ]
 
-        # Collects all the meeting times for each lab section
-        section_times = sections.loc[sections_assigned, 'daytime'].values
-
-
-        # If length of unique times is less than the number of assigned sections, conflict exists!
-        if len(np.unique(section_times)) < len(section_times):
-            time_conflicts_count += 1
-
-    return time_conflicts_count
+    return int(sum(conflicts_per_ta))
 
 # OBJECTIVE 3
 @profile
@@ -231,31 +221,30 @@ def agent_reduce_overallocation(parents):
 
     return sol
 
-# Adding the objectives to evo!
-evo = Evo()
-evo.add_objective('overallocation', overallocation)
-evo.add_objective('conflicts', conflicts)
-evo.add_objective('under#|support', undersupport)
-evo.add_objective('unavailable', unavailable)
-evo.add_objective('unpreferred', unpreferred)
 
-for _ in range(20):
-    evo.add_solution(inital_solutions())
+if __name__ == "__main__":
+    # Adding the objectives to evo!
+    evo = Evo()
+    evo.add_objective('overallocation', overallocation)
+    evo.add_objective('conflicts', conflicts)
+    evo.add_objective('under#|support', undersupport)
+    evo.add_objective('unavailable', unavailable)
+    evo.add_objective('unpreferred', unpreferred)
 
-# Register agents
-evo.add_agent("fix_unavailable", agent_fix_unavailable, k=1)
-evo.add_agent("fix_unpreferred", agent_fix_unpreferred, k=1)
-evo.add_agent("random_flip", agent_random_flip, k=1)
-evo.add_agent("reduce_overallocation", agent_reduce_overallocation, k=1)
+    for _ in range(5):
+        evo.add_solution(inital_solutions())
 
-print("Initial nondominated population:")
-print(evo)
+    # Register agents
+    evo.add_agent("fix_unavailable", agent_fix_unavailable, k=1)
+    evo.add_agent("fix_unpreferred", agent_fix_unpreferred, k=1)
+    evo.add_agent("random_flip", agent_random_flip, k=1)
+    evo.add_agent("reduce_overallocation", agent_reduce_overallocation, k=1)
 
-# Run for 5 minutes
-evo.evolve(time_limit=300)
+    # Run for 5 minutes
+    evo.evolve(time_limit=300)
 
-print("\nFinal nondominated population:")
-print(evo)
+    print("\nFinal nondominated population:")
+    print(evo)
 
-Profiler.report()
+    Profiler.report()
 
