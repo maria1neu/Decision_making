@@ -8,8 +8,11 @@ import pandas as pd
 import random as rnd
 import numpy as np
 from evo import Evo
+from profiler import profile
+from profiler import Profiler
 
 # OBJECTIVE 1
+@profile
 def overallocation(sol):
     """
     Parameters:
@@ -32,6 +35,7 @@ def overallocation(sol):
     return total_penalties
 
 # OBJECTIVE 2
+@profile
 def conflicts(sol):
     """
     Parameters:
@@ -58,6 +62,7 @@ def conflicts(sol):
     return time_conflicts_count
 
 # OBJECTIVE 3
+@profile
 def undersupport(sol):
     """
     Parameters:
@@ -80,6 +85,7 @@ def undersupport(sol):
     return total_penalties
 
 # OBJECTIVE 4
+@profile
 def unavailable(sol):
     """
     Parameters:
@@ -103,6 +109,7 @@ def unavailable(sol):
     return penalty
 
 # OBJECTIVE 5
+@profile
 def unpreferred(sol):
     """
     Parameters:
@@ -167,6 +174,7 @@ def inital_solutions():
 
     return { "assignments": assignments, "tas": tas, "sections": sections }
 
+@profile
 def agent_fix_unavailable(parents):
 
     sol = parents[0]
@@ -184,6 +192,7 @@ def agent_fix_unavailable(parents):
 
     return sol
 
+@profile
 def agent_fix_unpreferred(parents):
 
     sol = parents[0]
@@ -201,6 +210,7 @@ def agent_fix_unpreferred(parents):
 
     return sol
 
+@profile
 def agent_random_flip(parents):
 
     sol = parents[0]
@@ -214,6 +224,7 @@ def agent_random_flip(parents):
 
     return sol
 
+@profile
 def agent_reduce_overallocation(parents):
 
     sol = parents[0]
@@ -237,7 +248,7 @@ def agent_reduce_overallocation(parents):
 evo = Evo()
 evo.add_objective('overallocation', overallocation)
 evo.add_objective('conflicts', conflicts)
-evo.add_objective('undersupport', undersupport)
+evo.add_objective('under#|support', undersupport)
 evo.add_objective('unavailable', unavailable)
 evo.add_objective('unpreferred', unpreferred)
 
@@ -258,3 +269,6 @@ evo.evolve(time_limit=300)
 
 print("\nFinal nondominated population:")
 print(evo)
+
+Profiler.report()
+
