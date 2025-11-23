@@ -39,16 +39,13 @@ def overallocation(sol):
 def conflicts(sol):
     assignments = sol['assignments']
     sections = sol['sections']
-
     times = sections['daytime'].to_numpy()
     time_matrix = assignments * times
-
     # Count conflicts per TA
     conflicts_per_ta = [
         1 if len(row[row != 0]) != len(np.unique(row[row != 0])) else 0
         for row in time_matrix
     ]
-
     return int(sum(conflicts_per_ta))
 
 # OBJECTIVE 3
@@ -221,7 +218,6 @@ def agent_reduce_overallocation(parents):
 
     return sol
 
-
 if __name__ == "__main__":
     # Adding the objectives to evo!
     evo = Evo()
@@ -230,21 +226,15 @@ if __name__ == "__main__":
     evo.add_objective('under#|support', undersupport)
     evo.add_objective('unavailable', unavailable)
     evo.add_objective('unpreferred', unpreferred)
-
     for _ in range(5):
         evo.add_solution(inital_solutions())
-
     # Register agents
     evo.add_agent("fix_unavailable", agent_fix_unavailable, k=1)
     evo.add_agent("fix_unpreferred", agent_fix_unpreferred, k=1)
     evo.add_agent("random_flip", agent_random_flip, k=1)
     evo.add_agent("reduce_overallocation", agent_reduce_overallocation, k=1)
-
     # Run for 5 minutes
     evo.evolve(time_limit=300)
-
     print("\nFinal nondominated population:")
     print(evo)
-
     Profiler.report()
-
