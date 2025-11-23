@@ -86,19 +86,14 @@ def unavailable(sol):
     Returns:
     Does:
     """
-    tas = sol['tas']
     assignments = sol['assignments']
+    tas = sol['tas']
 
-    penalty = 0
+    availability_columns = [str(i) for i in range(assignments.shape[1])]
+    availability = tas[availability_columns].to_numpy()
 
-    # loops through all the columns and rows to see ta availability
-    for i in range(assignments.shape[0]):
-        for j in range(assignments.shape[1]):
-            # adds a penalty if the ta was scheduled but wrote unavailable
-            if assignments[i][j] == 1 and tas.iloc[i, j + 3] == 'U':
-                penalty += 1
-            else:
-                penalty = penalty
+    # Checking the UNavailability of the TAs!
+    penalty = np.sum((assignments == 1) & (availability == 'U'))
 
     return penalty
 
@@ -109,23 +104,15 @@ def unpreferred(sol):
     Returns:
     Does:
     """
-
-    # tas = sol['tas']
     assignments = sol['assignments']
     availability = sol['tas'][[str(i) for i in range(assignments.shape[1])]].to_numpy()
-    # avail_cols = [col for col in tas.columns if col.isdigit()]
-    # availability = tas[avail_cols].astype(str).to_numpy()
 
-    # penalty = 0
-
-    # for i in range(assignments.shape[0]):
-        # for j in range(assignments.shape[1]):
-            # f assignments[i][j] == 1 and availability[i, j] == 'W':
-                # penalty += 1
+    # Checking if TAs preference is WILLING, a change from the previous objective
     preference = np.sum((assignments == 1) & (availability == 'W'))
+
     return preference
 
-#randomized initial solution
+# randomized initial solution
 def inital_solutions():
 
     tas = pd.read_csv("tas.csv")
