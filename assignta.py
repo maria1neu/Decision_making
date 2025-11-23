@@ -110,20 +110,20 @@ def unpreferred(sol):
     Does:
     """
 
-    tas = sol['tas']
+    # tas = sol['tas']
     assignments = sol['assignments']
+    availability = sol['tas'][[str(i) for i in range(assignments.shape[1])]].to_numpy()
+    # avail_cols = [col for col in tas.columns if col.isdigit()]
+    # availability = tas[avail_cols].astype(str).to_numpy()
 
-    avail_cols = [col for col in tas.columns if col.isdigit()]
-    availability = tas[avail_cols].astype(str).to_numpy()
+    # penalty = 0
 
-    penalty = 0
-
-    for i in range(assignments.shape[0]):
-        for j in range(assignments.shape[1]):
-            if assignments[i][j] == 1 and availability[i, j] == 'W':
-                penalty += 1
-
-    return penalty
+    # for i in range(assignments.shape[0]):
+        # for j in range(assignments.shape[1]):
+            # f assignments[i][j] == 1 and availability[i, j] == 'W':
+                # penalty += 1
+    preference = np.sum((assignments == 1) & (availability == 'W'))
+    return preference
 
 #randomized initial solution
 def inital_solutions():
