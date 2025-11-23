@@ -7,9 +7,12 @@ assignta.py
 import pandas as pd
 import random as rnd
 import numpy as np
+from profiler import profile
+from profiler import Profiler
 from evo import Evo
 
 # OBJECTIVE 1
+@profile
 def overallocation(sol):
     """
     Parameters:
@@ -32,6 +35,7 @@ def overallocation(sol):
     return total_penalties
 
 # OBJECTIVE 2
+@profile
 def conflicts(sol):
     """
     Parameters:
@@ -58,6 +62,7 @@ def conflicts(sol):
     return time_conflicts_count
 
 # OBJECTIVE 3
+@profile
 def undersupport(sol):
     """
     Parameters:
@@ -80,6 +85,7 @@ def undersupport(sol):
     return total_penalties
 
 #OBJECTIVE 4
+@profile
 def unavailable(sol):
     """
     Parameters:
@@ -102,6 +108,8 @@ def unavailable(sol):
 
     return penalty
 
+#OBJECTIVE 5
+@profile
 def unpreferred(sol):
     """
     Parameters:
@@ -112,11 +120,14 @@ def unpreferred(sol):
     tas = sol['tas']
     assignments = sol['assignments']
 
+    avail_cols = [col for col in tas.columns if col.isdigit()]
+    availability = tas[avail_cols].astype(str).to_numpy()
+
     penalty = 0
 
     for i in range(assignments.shape[0]):
         for j in range(assignments.shape[1]):
-            if assignments[i][j] == 1 and tas.iloc[i, j + 3] == 'W':
+            if assignments[i][j] == 1 and availability[i, j] == 'W':
                 penalty += 1
 
     return penalty
@@ -163,6 +174,7 @@ def inital_solutions():
 
     return { "assignments": assignments, "tas": tas, "sections": sections }
 
+@profile
 def agent_fix_unavailable(parents):
 
     sol = parents[0]
@@ -179,7 +191,7 @@ def agent_fix_unavailable(parents):
         assignments[i, j] = 0
 
     return sol
-
+@profile
 def agent_fix_unpreferred(parents):
 
     sol = parents[0]
@@ -197,6 +209,7 @@ def agent_fix_unpreferred(parents):
 
     return sol
 
+@profile
 def agent_random_flip(parents):
 
     sol = parents[0]
@@ -210,6 +223,7 @@ def agent_random_flip(parents):
 
     return sol
 
+@profile
 def agent_reduce_overallocation(parents):
 
     sol = parents[0]
@@ -252,5 +266,6 @@ print(evo)
 # Run for 5 minutes
 evo.evolve(time_limit=300)
 
+Profiler.report()
 print("\nFinal nondominated population:")
 print(evo)
