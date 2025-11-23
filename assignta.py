@@ -84,8 +84,14 @@ def unavailable(sol):
     """
     assignments = sol['assignments']
     tas = sol['tas']
-    avail = tas.iloc[:, 3:].to_numpy()
-    return int(((assignments == 1) & (avail == 'U')).sum())
+
+    availability_columns = [str(i) for i in range(assignments.shape[1])]
+    availability = tas[availability_columns].to_numpy()
+
+    # Checking the UNavailability of the TAs!
+    penalty = np.sum((assignments == 1) & (availability == 'U'))
+
+    return penalty
 
 # OBJECTIVE 5
 @profile
@@ -95,23 +101,15 @@ def unpreferred(sol):
     Returns:
     Does:
     """
-
-    tas = sol['tas']
     assignments = sol['assignments']
+    availability = sol['tas'][[str(i) for i in range(assignments.shape[1])]].to_numpy()
 
-    avail_cols = [col for col in tas.columns if col.isdigit()]
-    availability = tas[avail_cols].astype(str).to_numpy()
+    # Checking if TAs preference is WILLING, a change from the previous objective
+    preference = np.sum((assignments == 1) & (availability == 'W'))
 
-    penalty = 0
+    return preference
 
-    for i in range(assignments.shape[0]):
-        for j in range(assignments.shape[1]):
-            if assignments[i][j] == 1 and availability[i, j] == 'W':
-                penalty += 1
-
-    return penalty
-
-#randomized initial solution
+# randomized initial solution
 def inital_solutions():
 
     tas = pd.read_csv("tas.csv")
