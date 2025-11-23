@@ -37,11 +37,6 @@ def overallocation(sol):
 # OBJECTIVE 2
 @profile
 def conflicts(sol):
-    """
-    Parameters:
-    Returns:
-    Does:
-    """
     assignments = sol['assignments']
     sections = sol['sections']
     times = sections['daytime'].to_numpy()
