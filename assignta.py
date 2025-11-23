@@ -260,12 +260,8 @@ evo.add_agent("fix_unpreferred", agent_fix_unpreferred, k=1)
 evo.add_agent("random_flip", agent_random_flip, k=1)
 evo.add_agent("reduce_overallocation", agent_reduce_overallocation, k=1)
 
-print("Initial nondominated population:")
-print(evo)
-
 # Run for 5 minutes
 evo.evolve(time_limit=300)
 
+print("\nProfiling report:")
 Profiler.report()
-print("\nFinal nondominated population:")
-print(evo)
