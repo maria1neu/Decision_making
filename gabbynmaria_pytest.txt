@@ -1,0 +1,9 @@
+git ============================= test session starts ==============================
+platform darwin -- Python 3.11.13, pytest-8.4.1, pluggy-1.5.0
+rootdir: /Users/mariasamosrivas/Desktop/NEU/DS3500/HW06
+plugins: cov-6.0.0, timeout-2.4.0
+collected 5 items
+
+test_assignta.py .....                                                   [100%]
+
+======================== 5 passed in 302.28s (0:05:02) =========================
