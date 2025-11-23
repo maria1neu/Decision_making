@@ -1,0 +1,12 @@
+git Profiling report:
+Function              Calls     TotSec   Sec/Call
+overallocation          965   0.058213   0.000060
+conflicts               965   7.992148   0.008282
+undersupport            965   0.284254   0.000295
+unavailable             965   0.907394   0.000940
+unpreferred             965   0.559345   0.000580
+agent_fix_unpreferred    230   0.029426   0.000128
+agent_reduce_overallocation    235   0.011231   0.000048
+agent_fix_unavailable    242   0.030645   0.000127
+agent_random_flip       238   0.001590   0.000007
+Evo.evolve                1 300.030221 300.030221
