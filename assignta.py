@@ -39,14 +39,21 @@ def overallocation(sol):
 def conflicts(sol):
     assignments = sol['assignments']
     sections = sol['sections']
-    times = sections['daytime'].to_numpy()
-    time_matrix = assignments * times
-    # Count conflicts per TA
-    conflicts_per_ta = [
-        1 if len(row[row != 0]) != len(np.unique(row[row != 0])) else 0
-        for row in time_matrix
-    ]
-    return int(sum(conflicts_per_ta))
+
+    time_conflicts_count = 0
+
+    # Loops over all TAs and their assignments
+    for i in range(assignments.shape[0]):
+        sections_assigned = np.where(assignments[i] == 1)[0]
+
+        # Collects all the meeting times for each lab section
+        section_times = sections.loc[sections_assigned, 'daytime'].values
+
+        # If length of unique times is less than the number of assigned sections, conflict exists!
+        if len(np.unique(section_times)) < len(section_times):
+            time_conflicts_count += 1
+
+    return time_conflicts_count
 
 # OBJECTIVE 3
 @profile
