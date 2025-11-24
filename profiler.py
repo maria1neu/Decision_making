@@ -5,10 +5,9 @@ Due 11/23/25
 profiler.py
 """
 
+#imports
 from collections import defaultdict
 import time
-
-
 
 def profile(f):
     """ Convenience function to make decorator tags simpler:
