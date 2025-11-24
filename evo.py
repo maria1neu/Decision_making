@@ -87,11 +87,14 @@ class Evo:
 
         dom:  defines how often we remove dominated (unfit) solutions
         status defines how often we display the current population
+
+        time_limit: time limit for the evolution
         """
 
         start = time.time()
         i = 0
 
+        # counts how long it takes to run
         while time.time() - start < time_limit:
 
             self.run_random_agent()
