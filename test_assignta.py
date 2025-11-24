@@ -81,3 +81,4 @@ def test_unpreferred():
     assert unpreferred(sol1) == 10
     assert unpreferred(sol2) == 16
     assert unpreferred(sol3) == 17
+# PASSED

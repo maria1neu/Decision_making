@@ -5,7 +5,7 @@ Due 11/23/25
 assignta.py
 """
 
-# imports
+# importing external libraries for later use
 import pandas as pd
 import random as rnd
 import numpy as np
