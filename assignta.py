@@ -230,7 +230,7 @@ if __name__ == "__main__":
     evo = Evo()
     evo.add_objective('overallocation', overallocation)
     evo.add_objective('conflicts', conflicts)
-    evo.add_objective('under#|support', undersupport)
+    evo.add_objective('undersupport', undersupport)
     evo.add_objective('unavailable', unavailable)
     evo.add_objective('unpreferred', unpreferred)
     for _ in range(5):
@@ -242,6 +242,10 @@ if __name__ == "__main__":
     evo.add_agent("reduce_overallocation", agent_reduce_overallocation, k=1)
     # Run for 5 minutes
     evo.evolve(time_limit=300)
-    print("\nFinal nondominated population:")
-    print(evo)
+
+    # Run summary table!
+    evo.summarize('gabymari_summary.csv', groupname = 'gabymari')
+
+    # print("\nFinal nondominated population:")
+    # print(evo)
     Profiler.report()

@@ -8,6 +8,10 @@
       <change beforePath="$PROJECT_DIR$/.idea/HW06.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/HW06.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assignta.py" beforeDir="false" afterPath="$PROJECT_DIR$/assignta.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/evo.py" beforeDir="false" afterPath="$PROJECT_DIR$/evo.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gabbynmaria_profile.txt" beforeDir="false" afterPath="$PROJECT_DIR$/gabymari.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gabbynmaria_pytest.txt" beforeDir="false" afterPath="$PROJECT_DIR$/gabymari_pytest.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,20 +34,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "Python tests.Python tests in test_assignta.py.executor": "Run",
-    "Python.assignta.executor": "Run",
-    "Python.evo.executor": "Run",
-    "Python.profiler.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "maria",
-    "settings.editor.selected.configurable": "project.propVCSSupport.Mappings"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;Python tests.Python tests in test_assignta.py.executor&quot;: &quot;Run&quot;,
+    &quot;Python.assignta.executor&quot;: &quot;Run&quot;,
+    &quot;Python.evo.executor&quot;: &quot;Run&quot;,
+    &quot;Python.profiler.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;project.propVCSSupport.Mappings&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="assignta" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="HW06" />
@@ -71,10 +75,11 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-python-sdk-ce6832f46686-7b97d883f26b-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-252.25557.178" />
+        <option value="bundled-python-sdk-98f27166c754-ba05f1cad1b1-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-242.21829.153" />
       </set>
     </attachedChunks>
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="1c5e9b2f-76eb-467d-9c6c-8756da1052e0" name="Changes" comment="" />

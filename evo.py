@@ -10,6 +10,9 @@ import copy
 from functools import reduce
 import numpy as np
 import time
+
+import pandas as pd
+
 from profiler import profile
 
 class Evo:
@@ -100,6 +103,35 @@ class Evo:
 
         # final clean up
         self.remove_dominated()
+
+    def summarize(self, filename, groupname = 'gabymari'):
+        """ Creates a CSV summary table for our set of solutions
+            Contains columns gabymari (groupname), overallocation, conflicts, undersupport,
+            unavailable, unpreferred """
+
+        rows = []
+
+        for scores in self.pop.keys():
+            row = {'groupname': groupname}
+
+            for (obj_name, _), score_value in zip(self.objectives, scores):
+                row[obj_name] = score_value
+
+            rows.append(row)
+
+        summary_df = pd.DataFrame(rows)
+
+        summary_df = summary_df[[
+            'groupname',
+            'overallocation',
+            'conflicts',
+            'undersupport',
+            'unavailable',
+            'unpreferred'
+        ]]
+
+        summary_df.to_csv(filename, index = False)
+
 
     def __str__(self):
         """ Output the solutions in the population """
