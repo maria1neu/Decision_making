@@ -1,1 +1,11 @@
-justify our best solution here!
+Gabriella Montalvo & Maria Samos Rivas
+DS3500 HW6: Evolutionary Computing, Professor Rachlin
+11/23/25
+
+    After running assignta.py and gathering the summary table of our final non-dominated Pareto-optimal
+solutions, we deemed our best solution to be found in row 5, reading "gabymari,0,1,0,0,30". When observing
+this solution in comparison to the others, it becomes clear that it minimizes overallocation, conflicts,
+undersupport, and unavailability in a way that is substantially better than others. Although initially it might
+not seem ideal considering that the number of TAs allocated to a section they are "willing" to fill is not minimized
+to the greatest degree, the minimization of the other factors stand out significantly.
+    To describe in greater detail, all overallocation and conflict issues are eliminated entirely
