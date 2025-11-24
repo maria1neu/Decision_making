@@ -3,9 +3,16 @@ DS3500 HW6: Evolutionary Computing, Professor Rachlin
 11/23/25
 
     After running assignta.py and gathering the summary table of our final non-dominated Pareto-optimal
-solutions, we deemed our best solution to be found in row 5, reading "gabymari,0,1,0,0,30". When observing
+solutions, we deemed our best solution to be found in row 22, reading "gabymari,0,0,3,0,27". When observing
 this solution in comparison to the others, it becomes clear that it minimizes overallocation, conflicts,
-undersupport, and unavailability in a way that is substantially better than others. Although initially it might
-not seem ideal considering that the number of TAs allocated to a section they are "willing" to fill is not minimized
-to the greatest degree, the minimization of the other factors stand out significantly.
-    To describe in greater detail, all overallocation and conflict issues are eliminated entirely
+undersupport, unavailability, and preference in a way that is substantially better than others. Initially, it might
+not seem ideal considering that undersupport is at 3, but all other issues in question are minimized the most while
+offering some mitigation to the assignment of TAs to an unpreferred section.
+    To describe in greater detail, all overallocation and conflict issues are eliminated entirely, both being at 0.
+Undersupport is at a moderate count of 3, but this is mitigated by the fact that this allows for unpreferred
+assignments to be at a reasonable level. Our runner-up for a best solution was found in row 5, reading
+"gabymari,0,1,0,0,30". Although this solution keeps overallocation, undersupport, and unavailability at 0, the
+number of TAs assigned preferred is greater than our chosen solution, indicating that it is not minimized the most
+by this option. Both solutions stood out to us, but we ultimately decided on the solution found in row 22
+due to its indication that TAs allocated to a section that is "unpreferred" to them is minimized in a way that
+keeps most other objective names minimized at 0.
